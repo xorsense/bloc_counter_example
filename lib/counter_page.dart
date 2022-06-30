@@ -43,9 +43,17 @@ class CounterPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 5.0),
             child: FloatingActionButton(
-              child: const Icon(Icons.filter_2_rounded),
+              child: const Icon(Icons.clear),
               onPressed: () =>
                   context.read<CounterBloc>().add(CounterMultiplierPressed()),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5.0),
+            child: FloatingActionButton(
+              child: const Icon(Icons.delete_outline),
+              onPressed: () =>
+                  context.read<CounterBloc>().add(CounterClearPressed()),
             ),
           )
         ],
