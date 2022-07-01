@@ -10,11 +10,19 @@ class CounterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Counter')),
-      body: BlocBuilder<CounterBloc, int>(
-        builder: (context, count) {
+      body: BlocBuilder<CounterBloc, CounterState>(
+        builder: (context, counterState) {
+          // TODO: Make snackbar work
+          // var snackBar = ScaffoldMessenger.of(context);
+          // bool badState = (counterState.event is CounterMultiplierPressed &&
+          //     counterState.count == 0);
+          // if (badState) {
+          //   snackBar.showSnackBar(
+          //       const SnackBar(content: Text('0 cannot be doubled')));
+          // }
           return Center(
             child: Text(
-              '$count',
+              '${counterState.count}',
               style: const TextStyle(fontSize: 24.0),
             ),
           );
