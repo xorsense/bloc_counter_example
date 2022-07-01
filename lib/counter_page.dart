@@ -10,23 +10,38 @@ class CounterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Counter')),
-      body: BlocBuilder<CounterBloc, CounterState>(
-        builder: (context, counterState) {
-          // TODO: Make snackbar work
-          // var snackBar = ScaffoldMessenger.of(context);
-          // bool badState = (counterState.event is CounterMultiplierPressed &&
-          //     counterState.count == 0);
-          // if (badState) {
-          //   snackBar.showSnackBar(
-          //       const SnackBar(content: Text('0 cannot be doubled')));
-          // }
-          return Center(
-            child: Text(
-              '${counterState.count}',
-              style: const TextStyle(fontSize: 24.0),
-            ),
-          );
-        },
+      body: BlocListener<CounterBloc, CounterState>(
+        listener: ((context, counterState) {
+          var snackBar = ScaffoldMessenger.of(context);
+          bool badState = (counterState.event is CounterMultiplierPressed &&
+              counterState.count == 0);
+          bool badClear = (counterState.event is CounterClearPressed &&
+              counterState.count == 0);
+          if (badState) {
+            snackBar.showSnackBar(
+              const SnackBar(
+                content: Text('0 cannot be doubled'),
+              ),
+            );
+          }
+          if (badClear) {
+            snackBar.showSnackBar(
+              const SnackBar(
+                content: Text('Field is already clear'),
+              ),
+            );
+          }
+        }),
+        child: BlocBuilder<CounterBloc, CounterState>(
+          builder: (context, counterState) {
+            return Center(
+              child: Text(
+                '${counterState.count}',
+                style: const TextStyle(fontSize: 24.0),
+              ),
+            );
+          },
+        ),
       ),
       floatingActionButton: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
