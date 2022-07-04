@@ -13,21 +13,10 @@ class CounterPage extends StatelessWidget {
       body: BlocListener<CounterBloc, CounterState>(
         listener: ((context, counterState) {
           var snackBar = ScaffoldMessenger.of(context);
-          bool badState = (counterState.event is CounterMultiplierPressed &&
-              counterState.count == 0);
-          bool badClear = (counterState.event is CounterClearPressed &&
-              counterState.count == 0);
-          if (badState) {
+          if (counterState.isError) {
             snackBar.showSnackBar(
-              const SnackBar(
-                content: Text('0 cannot be doubled'),
-              ),
-            );
-          }
-          if (badClear) {
-            snackBar.showSnackBar(
-              const SnackBar(
-                content: Text('Field is already clear'),
+              SnackBar(
+                content: Text(counterState.message),
               ),
             );
           }
